@@ -1,0 +1,18 @@
+version: "3.0"
+
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-CU11-ubuntu-22.04
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "MagnoliA!123"
+      MSSQL_PID: "Express"
+      DB_NAME: "EcommerceManager"
+    ports:
+      - "41433:1433"
+    volumes:
+      - ./localrun/sqlserver:/usr/src/app
+      - ./localrun/sqlserver/scripts:/docker-entrypoint-initdb.d
+    working_dir: /usr/src/app
+    command: sh -c './db-setup.sh & /opt/mssql/bin/sqlservr;'
