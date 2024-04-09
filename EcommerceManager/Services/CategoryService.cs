@@ -17,7 +17,12 @@ namespace EcommerceManager.Services
         public async Task InsertNewCategory(Category category)
         {
             await _validateCategory.Validate(category);
-            category.Parent = await _categoryDbAccess.GetCategoryFromDbById(category.Parent.Id);
+
+            if(category.Parent != null)
+            {
+                category.Parent = await _categoryDbAccess.GetCategoryFromDbById(category.Parent.Id);
+            }
+
             await _categoryDbAccess.AddNewCategory(category);
         }
 

@@ -14,11 +14,15 @@ namespace EcommerceManager.Mappers
                 Name = categoryRequest.Name,
                 Description = categoryRequest.Description,
                 Image = categoryRequest.Image,
-                Parent = new()
+            };
+
+            if(categoryRequest.ParentId != 0)
+            {
+                category.Parent = new()
                 {
                     Id = categoryRequest.ParentId
-                }
-            };
+                };
+            }
 
             return category;
         }
