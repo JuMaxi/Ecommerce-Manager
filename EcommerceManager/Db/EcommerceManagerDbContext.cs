@@ -8,5 +8,6 @@ namespace EcommerceManager.Db
         public EcommerceManagerDbContext(DbContextOptions<EcommerceManagerDbContext> options) : base(options) { }
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Brand> Brands { get; set; }
     }
 }
