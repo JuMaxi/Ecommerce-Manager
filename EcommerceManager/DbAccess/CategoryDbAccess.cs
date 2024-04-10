@@ -1,7 +1,6 @@
 ﻿using EcommerceManager.Db;
 using EcommerceManager.Interfaces;
 using EcommerceManager.Models.DataBase;
-using EcommerceManager.Models.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceManager.DbAccess
