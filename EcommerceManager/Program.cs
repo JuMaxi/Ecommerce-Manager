@@ -19,8 +19,10 @@ builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<ICategoryDbAccess, CategoryDbAccess>();
 builder.Services.AddTransient<IValidateCategory, ValidateCategory>();
 builder.Services.AddTransient<ICategoryMapper, CategoryMapper>();
-
-
+builder.Services.AddTransient<IBrandService, BrandService>();
+builder.Services.AddTransient<IBrandDbAccess, BrandDbAccess>();
+builder.Services.AddTransient<IBrandMapper, BrandMapper>();
+builder.Services.AddTransient<IValidateBrand, ValidateBrand>();
 
 string connectionString = builder.Configuration.GetValue<string>("ConnectionStringDBContext");
 builder.Services.AddDbContext<EcommerceManagerDbContext>(DB => DB.UseSqlServer(connectionString));
