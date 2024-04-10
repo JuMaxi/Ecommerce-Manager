@@ -9,14 +9,21 @@ namespace EcommerceManager.Tests.Services
 {
     public class CategoryServiceTests
     {
+        private ICategoryDbAccess dbAccessFake;
+        private IValidateCategory validatorFake;
+        private CategoryService service;
+
+        public CategoryServiceTests()
+        {
+            dbAccessFake = Substitute.For<ICategoryDbAccess>();
+            validatorFake = Substitute.For<IValidateCategory>();
+
+            service = new CategoryService(dbAccessFake, validatorFake);
+        }
+
         [Fact]
         public async Task WhenInsertingNewCategory_ShouldSaveOnDatabase()
         {
-            ICategoryDbAccess dbAccessFake = Substitute.For<ICategoryDbAccess>();
-            IValidateCategory validatorFake = Substitute.For<IValidateCategory>();
-
-            CategoryService service = new CategoryService(dbAccessFake, validatorFake);
-
             Category toInclude = new Category()
             {
                 Name = "Test",
@@ -33,12 +40,6 @@ namespace EcommerceManager.Tests.Services
         [Fact]
         public async Task WhenInsertingNewCatetoryWithParent_ShouldGetParentFromDataBase()
         {
-            ICategoryDbAccess dbAccessFake = Substitute.For<ICategoryDbAccess>();
-            IValidateCategory validatorFake = Substitute.For<IValidateCategory>();
-
-            CategoryService service = new CategoryService(dbAccessFake, validatorFake);
-
-
             Category toInclude = new Category()
             {
                 Name = "Test",
@@ -60,11 +61,6 @@ namespace EcommerceManager.Tests.Services
         [Fact]
         public async Task WhenUpdatingCategory_ShouldBeEqualCategoryReceived()
         {
-            ICategoryDbAccess dbAccessFake = Substitute.For<ICategoryDbAccess>();
-            IValidateCategory validatorFake = Substitute.For<IValidateCategory>();
-
-            CategoryService service = new CategoryService(dbAccessFake, validatorFake);
-
             // This is the one we receive, we pass in the method's parameter
             Category toUpdate = new Category()
             {
@@ -99,11 +95,6 @@ namespace EcommerceManager.Tests.Services
         [Fact]
         public async Task WhenUpdatingCategoryParent_ShouldReturnCategoryParentFromDataBase()
         {
-            ICategoryDbAccess dbAccessFake = Substitute.For<ICategoryDbAccess>();
-            IValidateCategory validateCategory = Substitute.For<IValidateCategory>();
-
-            CategoryService service = new CategoryService(dbAccessFake, validateCategory);
-
             // This is the one we receive, we pass in the method's parameter
             Category updated = new Category()
             {
@@ -138,11 +129,6 @@ namespace EcommerceManager.Tests.Services
         [Fact]
         public async Task WhenUpdatingCategoryIfParentIsNull_ShouldUpdateParentToNull()
         {
-            ICategoryDbAccess dbAccessFake = Substitute.For<ICategoryDbAccess>();
-            IValidateCategory validateFake = Substitute.For<IValidateCategory>();
-
-            CategoryService service = new CategoryService(dbAccessFake, validateFake);
-
             Category updated = new Category()
             {
                 Id = 1,
@@ -165,11 +151,6 @@ namespace EcommerceManager.Tests.Services
         [Fact]
         public async Task WhenDeletingCategoryIfThereAreNoChildrenCategories_ShouldNotThrowException()
         {
-            ICategoryDbAccess dbAccessFake = Substitute.For<ICategoryDbAccess>();
-            IValidateCategory validateFake = Substitute.For<IValidateCategory>();
-
-            CategoryService service = new CategoryService(dbAccessFake, validateFake);
-
             Category delete = new Category()
             {
                 Id = 1,
@@ -186,11 +167,6 @@ namespace EcommerceManager.Tests.Services
         [Fact]
         public async Task WhenDeletingCategoryIfThereAreChildrenCategories_ShouldThrowException()
         {
-            ICategoryDbAccess dbAccessFake = Substitute.For<ICategoryDbAccess>();
-            IValidateCategory validateFake = Substitute.For<IValidateCategory>();
-
-            CategoryService service = new CategoryService(dbAccessFake, validateFake);
-
             Category delete = new Category()
             {
                 Id = 1,
