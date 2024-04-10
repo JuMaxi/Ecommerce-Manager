@@ -56,7 +56,7 @@ namespace EcommerceManager.Tests.MappersTests
         }
 
         [Fact]
-        public void WhenCategoryParentIsZero_ParentShouldBeNull()
+        public void WhenCategoryRequestParentIsZero_CategoryParentShouldBeNull()
         {
             CategoryRequest categoryRequest = new()
             {

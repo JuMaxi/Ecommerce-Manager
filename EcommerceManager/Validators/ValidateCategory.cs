@@ -16,6 +16,7 @@ namespace EcommerceManager.Validators
             await ValidateName(category);
             await ValidateDescription(category);
             ValidateImage(category.Image);
+            await ValidateParentExists(category);
         }
 
         private async Task ValidateName(Category category)
@@ -25,7 +26,7 @@ namespace EcommerceManager.Validators
                 throw new Exception("The Name field must be filled to continue.");
             }
 
-            if(category.Id == 0)
+            if (category.Id == 0)
             {
                 if (await _categoryDbAccess.GetCategoryFromDbByName(category.Name) != null)
                 {
@@ -41,7 +42,7 @@ namespace EcommerceManager.Validators
                 throw new Exception("The Description field must be filled to continue");
             }
 
-            if(category.Id == 0)
+            if (category.Id == 0)
             {
                 if (await _categoryDbAccess.GetCategoryFromDbByDescription(category.Description) != null)
                 {
@@ -49,12 +50,22 @@ namespace EcommerceManager.Validators
                 }
             }
         }
-
-        static void ValidateImage(string image)
+        private static void ValidateImage(string image)
         {
             if (string.IsNullOrEmpty(image))
             {
                 throw new Exception("The Image field must be filled to continue");
+            }
+        }
+
+        private async Task ValidateParentExists(Category category)
+        {
+            if (category.Parent != null)
+            {
+                if (await _categoryDbAccess.GetCategoryFromDbById(category.Parent.Id) == null)
+                {
+                    throw new Exception("The parent Id " + category.Parent.Id + " doesn't exist. Please verify before continue.");
+                }
             }
         }
     }

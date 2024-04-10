@@ -186,6 +186,5 @@ namespace EcommerceManager.Tests.Services
                 .ThrowAsync<Exception>()
                 .WithMessage("There are children categories for Id " + delete.Id + ". Please, verify the children categories before delete.");
         }
-
     }
 }

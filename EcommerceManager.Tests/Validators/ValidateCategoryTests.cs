@@ -1,8 +1,10 @@
-﻿using EcommerceManager.Interfaces;
+﻿using EcommerceManager.DbAccess;
+using EcommerceManager.Interfaces;
 using EcommerceManager.Models.DataBase;
 using EcommerceManager.Validators;
 using FluentAssertions;
 using NSubstitute;
+using NSubstitute.ReturnsExtensions;
 
 namespace EcommerceManager.Tests.Validators
 {
@@ -173,6 +175,28 @@ namespace EcommerceManager.Tests.Validators
             await validatorCategory.Invoking(validator => validator.Validate(category))
                 .Should().ThrowAsync<Exception>()
                 .WithMessage("The Image field must be filled to continue");
+        }
+
+        [Fact]
+        public async Task WhenCategoryParentDoesnotExistIntoDataBase_ShouldThrowException()
+        {
+            Category category = new()
+            {
+                Id = 1,
+                Name = "Skirt",
+                Description = "Women Skirts",
+                Image = "Image Test",
+                Parent = new() { Id = 10}
+            };
+
+            var dbAccessFake = Substitute.For<ICategoryDbAccess>();
+            dbAccessFake.GetCategoryFromDbById(category.Parent.Id).ReturnsNull();
+
+            ValidateCategory validatorCategory = new(dbAccessFake);
+
+            await validatorCategory.Invoking(validator => validator.Validate(category))
+                .Should().ThrowAsync<Exception>()
+                .WithMessage("The parent Id " + category.Parent.Id + " doesn't exist. Please verify before continue.");
         }
     }
 }
