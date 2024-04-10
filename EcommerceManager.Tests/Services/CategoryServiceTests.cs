@@ -1,7 +1,9 @@
 ﻿using EcommerceManager.Interfaces;
 using EcommerceManager.Models.DataBase;
 using EcommerceManager.Services;
+using FluentAssertions;
 using NSubstitute;
+using NSubstitute.ReturnsExtensions;
 
 namespace EcommerceManager.Tests.Services
 {
@@ -134,7 +136,6 @@ namespace EcommerceManager.Tests.Services
         }
 
         [Fact]
-
         public async Task WhenUpdatingCategoryIfParentIsNull_ShouldUpdateParentToNull()
         {
             ICategoryDbAccess dbAccessFake = Substitute.For<ICategoryDbAccess>();
@@ -159,6 +160,55 @@ namespace EcommerceManager.Tests.Services
             await service.UpdateCategory(updated);
 
             Assert.Null(toUpdate.Parent);
+        }
+
+        [Fact]
+        public async Task WhenDeletingCategoryIfThereAreNoChildrenCategories_ShouldNotThrowException()
+        {
+            ICategoryDbAccess dbAccessFake = Substitute.For<ICategoryDbAccess>();
+            IValidateCategory validateFake = Substitute.For<IValidateCategory>();
+
+            CategoryService service = new CategoryService(dbAccessFake, validateFake);
+
+            Category delete = new Category()
+            {
+                Id = 1,
+                Parent = null
+            };
+
+            dbAccessFake.GetCategoryFromDbByParentId(delete.Id).ReturnsNull();
+
+            await service.DeleteCategory(delete.Id);
+
+            await dbAccessFake.Received(1).DeleteCategory(delete.Id);
+        }
+
+        [Fact]
+        public async Task WhenDeletingCategoryIfThereAreChildrenCategories_ShouldThrowException()
+        {
+            ICategoryDbAccess dbAccessFake = Substitute.For<ICategoryDbAccess>();
+            IValidateCategory validateFake = Substitute.For<IValidateCategory>();
+
+            CategoryService service = new CategoryService(dbAccessFake, validateFake);
+
+            Category delete = new Category()
+            {
+                Id = 1,
+                Parent = null
+            };
+
+            Category childrenCategory = new Category()
+            {
+                Id = 10,
+                Parent = new() { Id = 1 }
+            };
+
+            dbAccessFake.GetCategoryFromDbByParentId(delete.Id).Returns(childrenCategory);
+
+            await service.Invoking(svc => svc.DeleteCategory(delete.Id))
+                .Should()
+                .ThrowAsync<Exception>()
+                .WithMessage("There are children categories for Id " + delete.Id + ". Please, verify the children categories before delete.");
         }
 
     }

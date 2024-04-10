@@ -18,7 +18,7 @@ namespace EcommerceManager.Services
         {
             await _validateCategory.Validate(category);
 
-            if(category.Parent != null)
+            if (category.Parent != null)
             {
                 category.Parent = await _categoryDbAccess.GetCategoryFromDbById(category.Parent.Id);
             }
@@ -41,8 +41,8 @@ namespace EcommerceManager.Services
             toUpdate.Name = category.Name;
             toUpdate.Description = category.Description;
             toUpdate.Image = category.Image;
-            
-            if(category.Parent != null)
+
+            if (category.Parent != null)
             {
                 Category parent = new();
                 parent = await _categoryDbAccess.GetCategoryFromDbById(category.Parent.Id);
@@ -50,7 +50,7 @@ namespace EcommerceManager.Services
             }
             else
             {
-                if(toUpdate.Parent != null)
+                if (toUpdate.Parent != null)
                 {
                     toUpdate.Parent = null;
                 }
@@ -58,9 +58,14 @@ namespace EcommerceManager.Services
 
             await _categoryDbAccess.UpdateCategory(toUpdate);
         }
-        
-        public async Task DeleteCategory(int id) 
-        { 
+
+        public async Task DeleteCategory(int id)
+        {
+            if (await _categoryDbAccess.GetCategoryFromDbByParentId(id) != null)
+            {
+                throw new Exception("There are children categories for Id " + id + ". Please, verify the children categories before delete.");
+            }
+
             await _categoryDbAccess.DeleteCategory(id);
         }
     }

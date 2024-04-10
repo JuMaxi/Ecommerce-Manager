@@ -36,6 +36,10 @@ namespace EcommerceManager.DbAccess
             return await _dbContext.Categories.Where(c => c.Description.Equals(description)).FirstOrDefaultAsync();
         }
 
+        public async Task<Category> GetCategoryFromDbByParentId(int ParentId)
+        {
+            return await _dbContext.Categories.Where(p => p.Parent.Id.Equals(ParentId)).FirstOrDefaultAsync();
+        }
         public async Task<List<Category>> GetListCategoriesFromDb()
         {
             var allCategories = await _dbContext.Categories.Include(c => c.Parent).ToListAsync();

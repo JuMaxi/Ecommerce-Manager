@@ -11,5 +11,6 @@ namespace EcommerceManager.Interfaces
         public Task<List<Category>> GetListCategoriesFromDb();
         public Task UpdateCategory(Category category);
         public Task DeleteCategory(int id);
+        public Task<Category> GetCategoryFromDbByParentId(int ParentId);
     }
 }
