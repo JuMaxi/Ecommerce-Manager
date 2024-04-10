@@ -48,6 +48,13 @@ namespace EcommerceManager.Services
                 parent = await _categoryDbAccess.GetCategoryFromDbById(category.Parent.Id);
                 toUpdate.Parent = parent;
             }
+            else
+            {
+                if(toUpdate.Parent != null)
+                {
+                    toUpdate.Parent = null;
+                }
+            }
 
             await _categoryDbAccess.UpdateCategory(toUpdate);
         }

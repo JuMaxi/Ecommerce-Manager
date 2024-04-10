@@ -133,5 +133,33 @@ namespace EcommerceManager.Tests.Services
             Assert.Equal(toUpdate.Parent, parent);
         }
 
+        [Fact]
+
+        public async Task WhenUpdatingCategoryIfParentIsNull_ShouldUpdateParentToNull()
+        {
+            ICategoryDbAccess dbAccessFake = Substitute.For<ICategoryDbAccess>();
+            IValidateCategory validateFake = Substitute.For<IValidateCategory>();
+
+            CategoryService service = new CategoryService(dbAccessFake, validateFake);
+
+            Category updated = new Category()
+            {
+                Id = 1,
+                Parent = null
+            };
+
+            Category toUpdate = new Category()
+            {
+                Id = 1,
+                Parent = new() { Id = 3 }
+            };
+
+            dbAccessFake.GetCategoryFromDbById(updated.Id).Returns(toUpdate);
+
+            await service.UpdateCategory(updated);
+
+            Assert.Null(toUpdate.Parent);
+        }
+
     }
 }
