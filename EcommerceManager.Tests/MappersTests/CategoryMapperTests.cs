@@ -31,7 +31,6 @@ namespace EcommerceManager.Tests.MappersTests
         [Fact]
         public void Checking_If_Category_is_Equal_CategoryResponse()
         {
-           
             Category category = new()
             {
                 Name = "Trousers",
@@ -54,7 +53,39 @@ namespace EcommerceManager.Tests.MappersTests
             listCategoriesResponse[0].Image.Should().Be(category.Image);
             listCategoriesResponse[0].ParentName.Should().Be(category.Parent.Name);
             listCategoriesResponse[0].ParentId.Should().Be(category.Parent.Id);
-           
+        }
+
+        [Fact]
+        public void WhenCategoryParentIsZero_ParentShouldBeNull()
+        {
+            CategoryRequest categoryRequest = new()
+            {
+                ParentId = 0
+            };
+
+            CategoryMapper categoryMapper = new();
+
+            Category category = categoryMapper.ConvertCategoryRequestToCategory(categoryRequest);
+
+            category.Parent.Should().BeNull();
+        }
+
+        [Fact]
+        public void WhenCategoryParentIsNotNull_CategoryResponseParent_ShouldBeEqualCategoryParent()
+        {
+            Category category = new()
+            {
+                Parent = new() { Id = 10, Name = "ParentTest" },
+            };
+
+            List<Category> listCategories = new() { category };
+            
+            CategoryMapper mapper = new();
+
+            List<CategoryResponse> listCategoriesResponse = mapper.ConvertCategoryToCategoryResponse(listCategories);
+
+            listCategoriesResponse[0].ParentId.Should().Be(category.Parent.Id);
+            listCategoriesResponse[0].ParentName.Should().Be(category.Parent.Name);
         }
     }
 }
