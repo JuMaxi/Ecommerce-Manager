@@ -56,7 +56,7 @@ namespace EcommerceManager.Tests.MappersTests
         }
 
         [Fact]
-        public void WhenCategoryRequestParentIsZero_CategoryParentShouldBeNull()
+        public void When_Category_Request_Parent_Is_Zero_Category_Parent_Should_Be_Null()
         {
             CategoryRequest categoryRequest = new()
             {
@@ -71,7 +71,7 @@ namespace EcommerceManager.Tests.MappersTests
         }
 
         [Fact]
-        public void WhenCategoryParentIsNotNull_CategoryResponseParent_ShouldBeEqualCategoryParent()
+        public void When_Category_Parent_Is_Not_Null_Category_Response_Parent_Should_Be_Equal_Category_Parent()
         {
             Category category = new()
             {
@@ -86,6 +86,34 @@ namespace EcommerceManager.Tests.MappersTests
 
             listCategoriesResponse[0].ParentId.Should().Be(category.Parent.Id.ToString());
             listCategoriesResponse[0].ParentName.Should().Be(category.Parent.Name);
+        }
+
+        [Fact]
+        public void When_Converting_Category_It_Should_Be_Equal_Category_Response()
+        {
+            Category category = new()
+            {
+                Id = 5,
+                Name = "Trousers",
+                Description = "Green Trousers",
+                Image = "www.trousersgreen.com",
+                Parent = new()
+                {
+                    Id = 2,
+                    Name = "Clothes"
+                }
+            };
+
+            CategoryMapper mapper = new();
+
+            CategoryResponse response = mapper.ConvertToResponse(category);
+
+            response.Id.Should().Be(category.Id);
+            response.Name.Should().Be(category.Name);
+            response.Description.Should().Be(category.Description);
+            response.Image.Should().Be(category.Image);
+            response.ParentId.Should().Be(category.Parent.Id.ToString());
+            response.ParentName.Should().Be(category.Parent.Name);
         }
     }
 }
