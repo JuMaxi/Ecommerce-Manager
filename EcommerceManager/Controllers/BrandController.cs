@@ -20,30 +20,36 @@ namespace EcommerceManager.Controllers
         }
 
         [HttpPost]
-        public async Task AddNewBrand(BrandRequest brandRequest)
+        public async Task Insert(BrandRequest brandRequest)
         {
-            await _brandService.InsertNewBrand(_brandMapper.ConvertBrandRequestToBrand(brandRequest));
+            await _brandService.Insert(_brandMapper.ConvertFromRequest(brandRequest));
         }
 
         [HttpGet]
-        public async Task<List<BrandResponse>> GetBrandsFromDataBase()
+        public async Task<List<BrandResponse>> GetAll()
         {
-            return _brandMapper.ConvertBrandToBrandResponse(await _brandService.GetBrandsFromDataBase());
+            return _brandMapper.ConvertToListResponse(await _brandService.GetAll());
+        }
+
+        [HttpGet("{id}")]
+        public async Task<BrandResponse> GetById([FromRoute] int id)
+        {
+            return _brandMapper.ConvertToResponse(await _brandService.GetById(id));
         }
 
         [HttpPut("{id}")]
-        public async Task UpdateBrand([FromRoute] int id, [FromBody] BrandRequest brandRequest)
+        public async Task Update([FromRoute] int id, [FromBody] BrandRequest brandRequest)
         {
-            Brand brand = _brandMapper.ConvertBrandRequestToBrand(brandRequest);
+            Brand brand = _brandMapper.ConvertFromRequest(brandRequest);
             brand.Id = id; 
 
-            await _brandService.UpdateBrand(brand);
+            await _brandService.Update(brand);
         }
 
         [HttpDelete("{id}")]
-        public async Task DeleteCategory([FromRoute] int id)
+        public async Task Delete([FromRoute] int id)
         {
-            await _brandService.DeleteBrand(id);
+            await _brandService.Delete(id);
         }
     }
 }

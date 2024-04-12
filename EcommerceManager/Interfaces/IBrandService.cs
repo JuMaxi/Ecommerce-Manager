@@ -4,9 +4,10 @@ namespace EcommerceManager.Interfaces
 {
     public interface IBrandService
     {
-        public Task InsertNewBrand(Brand brand);
-        public Task<List<Brand>> GetBrandsFromDataBase();
-        public Task UpdateBrand(Brand brand);
-        public Task DeleteBrand(int id);
+        public Task Insert(Brand brand);
+        public Task<List<Brand>> GetAll();
+        public Task Update(Brand brand);
+        public Task Delete(int id);
+        public Task<Brand> GetById(int id);
     }
 }

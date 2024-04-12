@@ -4,14 +4,14 @@ namespace EcommerceManager.Interfaces
 {
     public interface IBrandDbAccess
     {
-        public Task AddNewBrand(Brand brand);
-        public Task<Brand> GetBrandFromDataBaseById(int id);
+        public Task Insert(Brand brand);
+        public Task<Brand> GetById(int id);
 
-        public Task<Brand> GetBrandFromDataBaseByName(string name);
-        public Task<Brand> GetBrandFromDataBaseByYearOfFoundation(int year);
+        public Task<Brand> GetByName(string name);
+        public Task<Brand> GetByFoundationYear(int year);
 
-        public Task<List<Brand>> GetListBrandsFromDataBase();
-        public Task UpdateBrand(Brand brand);
-        public Task DeleteBrand(int id);
+        public Task<List<Brand>> GetAll();
+        public Task Update(Brand brand);
+        public Task Delete(int id);
     }
 }

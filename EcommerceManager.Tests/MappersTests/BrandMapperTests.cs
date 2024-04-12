@@ -24,7 +24,7 @@ namespace EcommerceManager.Tests.MappersTests
 
             BrandMapper brandMapper = new();
 
-            Brand brand = brandMapper.ConvertBrandRequestToBrand(brandRequest);
+            Brand brand = brandMapper.ConvertFromRequest(brandRequest);
 
             brand.Name.Should().Be(brandRequest.Name);
             brand.FoundationYear.Should().Be(brandRequest.FoundationYear);
@@ -42,7 +42,7 @@ namespace EcommerceManager.Tests.MappersTests
 
             BrandMapper brandMapper = new();
 
-            List<BrandResponse> brandResponse = brandMapper.ConvertBrandToBrandResponse(listBrand);
+            List<BrandResponse> brandResponse = brandMapper.ConvertToListResponse(listBrand);
 
             brandResponse[0].Name.Should().Be(listBrand[0].Name);
             brandResponse[0].FoundationYear.Should().Be(listBrand[0].FoundationYear);

@@ -14,33 +14,37 @@ namespace EcommerceManager.Services
             _validateBrand = validateBrand;
         }
 
-        public async Task InsertNewBrand(Brand brand)
+        public async Task Insert(Brand brand)
         {
             await _validateBrand.Validate(brand);
 
-            await _brandDbAccess.AddNewBrand(brand);
+            await _brandDbAccess.Insert(brand);
         }
 
-        public async Task<List<Brand>> GetBrandsFromDataBase()
+        public async Task<List<Brand>> GetAll()
         {
-            return await _brandDbAccess.GetListBrandsFromDataBase();
+            return await _brandDbAccess.GetAll();
         }
 
-        public async Task UpdateBrand(Brand brand)
+        public async Task<Brand> GetById(int id)
+        {
+            return await _brandDbAccess.GetById(id);
+        }
+        public async Task Update(Brand brand)
         {
             await _validateBrand.Validate(brand);
 
-            Brand toUpdate = await _brandDbAccess.GetBrandFromDataBaseById(brand.Id);
+            Brand toUpdate = await _brandDbAccess.GetById(brand.Id);
 
             toUpdate.Name = brand.Name;
             toUpdate.FoundationYear = brand.FoundationYear;
 
-            await _brandDbAccess.UpdateBrand(toUpdate);
+            await _brandDbAccess.Update(toUpdate);
         }
 
-        public async Task DeleteBrand(int id)
+        public async Task Delete(int id)
         {
-            await _brandDbAccess.DeleteBrand(id);
+            await _brandDbAccess.Delete(id);
         }
     }
 }

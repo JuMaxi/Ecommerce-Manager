@@ -1,16 +1,9 @@
-﻿using EcommerceManager.DbAccess;
-using EcommerceManager.Interfaces;
+﻿using EcommerceManager.Interfaces;
 using EcommerceManager.Models.DataBase;
 using EcommerceManager.Validators;
 using FluentAssertions;
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using NSubstitute.ReturnsExtensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EcommerceManager.Tests.Validators
 {
@@ -47,7 +40,7 @@ namespace EcommerceManager.Tests.Validators
             Brand brandDB = new() { Id = 11, Name = "Guess" };
 
             var dbAccessBrand = Substitute.For<IBrandDbAccess>();
-            dbAccessBrand.GetBrandFromDataBaseByName(brandNew.Name).Returns(brandDB);
+            dbAccessBrand.GetByName(brandNew.Name).Returns(brandDB);
 
             ValidateBrand validator = new(dbAccessBrand);
 
@@ -62,7 +55,7 @@ namespace EcommerceManager.Tests.Validators
             Brand brand = new() { Name = "Guess", FoundationYear = 0 };
 
             var dbAccessBrand = Substitute.For<IBrandDbAccess>();
-            dbAccessBrand.GetBrandFromDataBaseByName(brand.Name).ReturnsNull();
+            dbAccessBrand.GetByName(brand.Name).ReturnsNull();
 
             ValidateBrand validator = new(dbAccessBrand);
 
@@ -77,7 +70,7 @@ namespace EcommerceManager.Tests.Validators
             Brand brand = new() { Name = "Guess", FoundationYear = -5 };
 
             var dbAccessBrand = Substitute.For<IBrandDbAccess>();
-            dbAccessBrand.GetBrandFromDataBaseByName(brand.Name).ReturnsNull();
+            dbAccessBrand.GetByName(brand.Name).ReturnsNull();
 
             ValidateBrand validator = new(dbAccessBrand);
 
@@ -87,12 +80,12 @@ namespace EcommerceManager.Tests.Validators
         }
 
         [Fact]
-        public async Task When_Brand_FoundationYear_ss_Greater_Than_Actual_Year_Should_Throw_Exception()
+        public async Task When_Brand_FoundationYear_is_Greater_Than_Actual_Year_Should_Throw_Exception()
         {
             Brand brand = new() { Name = "Guess", FoundationYear = 2025 };
 
             var dbAccessBrand = Substitute.For<IBrandDbAccess>();
-            dbAccessBrand.GetBrandFromDataBaseByName(brand.Name).ReturnsNull();
+            dbAccessBrand.GetByName(brand.Name).ReturnsNull();
 
             ValidateBrand validator = new(dbAccessBrand);
 

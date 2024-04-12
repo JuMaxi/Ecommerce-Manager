@@ -14,41 +14,41 @@ namespace EcommerceManager.DbAccess
             _dbContext = dbContext;
         }
 
-        public async Task AddNewBrand(Brand brand)
+        public async Task Insert(Brand brand)
         {
             await _dbContext.AddAsync(brand);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Brand> GetBrandFromDataBaseById(int id)
+        public async Task<Brand> GetById(int id)
         {
             return await _dbContext.Brands.Where(b => b.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
-        public async Task<Brand> GetBrandFromDataBaseByName(string name)
+        public async Task<Brand> GetByName(string name)
         {
             return await _dbContext.Brands.Where(b => b.Name == name).FirstOrDefaultAsync();
         }
 
-        public async Task<Brand> GetBrandFromDataBaseByYearOfFoundation(int year)
+        public async Task<Brand> GetByFoundationYear(int year)
         {
             return await _dbContext.Brands.Where(b => b.FoundationYear == year).FirstOrDefaultAsync();
         }
 
-        public async Task<List<Brand>> GetListBrandsFromDataBase()
+        public async Task<List<Brand>> GetAll()
         {
             return await _dbContext.Brands.ToListAsync();
         }
 
-        public async Task UpdateBrand(Brand brand)
+        public async Task Update(Brand brand)
         {
             _dbContext.Brands.Update(brand);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteBrand(int id)
+        public async Task Delete(int id)
         {
-            _dbContext.Brands.Remove(await GetBrandFromDataBaseById(id));
+            _dbContext.Brands.Remove(await GetById(id));
             await _dbContext.SaveChangesAsync();
         }
     }

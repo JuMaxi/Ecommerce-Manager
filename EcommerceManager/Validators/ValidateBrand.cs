@@ -33,7 +33,7 @@ namespace EcommerceManager.Validators
 
         public async Task ValidateNameAlreadyExistsDataBase(Brand brand)
         {
-            Brand brandDb = await _brandDbAccess.GetBrandFromDataBaseByName(brand.Name);
+            Brand brandDb = await _brandDbAccess.GetByName(brand.Name);
 
             if (brandDb is not null && brand.Id != brandDb.Id)
             {

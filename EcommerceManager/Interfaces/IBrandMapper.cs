@@ -6,7 +6,8 @@ namespace EcommerceManager.Interfaces
 {
     public interface IBrandMapper
     {
-        public Brand ConvertBrandRequestToBrand(BrandRequest brandRequest);
-        public List<BrandResponse> ConvertBrandToBrandResponse(List<Brand> brands);
+        public Brand ConvertFromRequest(BrandRequest brandRequest);
+        public List<BrandResponse> ConvertToListResponse(List<Brand> brands);
+        public BrandResponse ConvertToResponse(Brand brand);
     }
 }

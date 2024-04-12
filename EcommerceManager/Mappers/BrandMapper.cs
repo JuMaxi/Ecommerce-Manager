@@ -7,7 +7,7 @@ namespace EcommerceManager.Mappers
 {
     public class BrandMapper : IBrandMapper
     {
-        public Brand ConvertBrandRequestToBrand(BrandRequest brandRequest)
+        public Brand ConvertFromRequest(BrandRequest brandRequest)
         {
             Brand brand = new Brand()
             {
@@ -18,7 +18,7 @@ namespace EcommerceManager.Mappers
             return brand;
         }
 
-        public List<BrandResponse> ConvertBrandToBrandResponse(List<Brand> brands)
+        public List<BrandResponse> ConvertToListResponse(List<Brand> brands)
         {
             List<BrandResponse> brandsResponse = new();
             foreach(Brand b in brands)
@@ -32,6 +32,18 @@ namespace EcommerceManager.Mappers
                 brandsResponse.Add(response);
             }
             return brandsResponse;
+        }
+
+        public BrandResponse ConvertToResponse(Brand brand)
+        {
+            BrandResponse response = new()
+            {
+                Id = brand.Id,
+                Name = brand.Name,
+                FoundationYear = brand.FoundationYear
+            };
+
+            return response;
         }
     }
 }
