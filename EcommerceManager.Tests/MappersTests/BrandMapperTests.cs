@@ -31,10 +31,11 @@ namespace EcommerceManager.Tests.MappersTests
         }
 
         [Fact]
-        public void When_Converting_Brand_It_Should_Be_Equal_BrandResponse()
+        public void When_Converting_ListBrand_It_Should_Be_Equal_ListBrandResponse()
         {
             Brand brand = new()
             {
+                Id = 1,
                 Name = "Forum",
                 FoundationYear = 1950
             };
@@ -44,8 +45,28 @@ namespace EcommerceManager.Tests.MappersTests
 
             List<BrandResponse> brandResponse = brandMapper.ConvertToListResponse(listBrand);
 
+            brandResponse[0].Id.Should().Be(brand.Id);
             brandResponse[0].Name.Should().Be(listBrand[0].Name);
             brandResponse[0].FoundationYear.Should().Be(listBrand[0].FoundationYear);
+        }
+
+        [Fact]
+        public void When_Converting_Brand_It_Should_Be_Equal_BrandResponse()
+        {
+            Brand brand = new()
+            {
+                Id = 10,
+                Name = "Guess",
+                FoundationYear = 1995
+            };
+
+            BrandMapper brandMapper = new();
+
+            BrandResponse brandResponse = brandMapper.ConvertToResponse(brand);
+
+            brandResponse.Id.Should().Be(brand.Id);
+            brandResponse.Name.Should().Be(brand.Name);
+            brandResponse.FoundationYear.Should().Be(brand.FoundationYear);
         }
     }
 }
