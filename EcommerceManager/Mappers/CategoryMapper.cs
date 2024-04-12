@@ -41,15 +41,34 @@ namespace EcommerceManager.Mappers
 
                 CategoryResponse categoryResponse = new()
                 {
+                    Id = c.Id,
                     Name = c.Name,
                     Description = c.Description,
                     Image = c.Image,
                     ParentName = parent.Name,
-                    ParentId = parent.Id
+                    ParentId = parent.Id.ToString(),
                 };
                 listCategoriesResponse.Add(categoryResponse);
             }
             return listCategoriesResponse;
+        }
+
+        public CategoryResponse ConvertToResponse(Category Category)
+        {
+            CategoryResponse categoryResponse = new()
+            {
+                Id = Category.Id,
+                Name = Category.Name,
+                Description = Category.Description,
+                Image = Category.Image,
+            };
+
+            if(Category.Parent is not null)
+            {
+                categoryResponse.ParentName = Category.Parent.Name;
+                categoryResponse.ParentId = Category.Parent.Id.ToString();
+            }
+            return categoryResponse;
         }
     }
 }

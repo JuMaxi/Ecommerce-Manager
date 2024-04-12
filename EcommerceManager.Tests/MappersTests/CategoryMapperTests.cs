@@ -52,7 +52,7 @@ namespace EcommerceManager.Tests.MappersTests
             listCategoriesResponse[0].Description.Should().Be(category.Description);
             listCategoriesResponse[0].Image.Should().Be(category.Image);
             listCategoriesResponse[0].ParentName.Should().Be(category.Parent.Name);
-            listCategoriesResponse[0].ParentId.Should().Be(category.Parent.Id);
+            listCategoriesResponse[0].ParentId.Should().Be(category.Parent.Id.ToString());
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace EcommerceManager.Tests.MappersTests
 
             List<CategoryResponse> listCategoriesResponse = mapper.ConvertToListResponse(listCategories);
 
-            listCategoriesResponse[0].ParentId.Should().Be(category.Parent.Id);
+            listCategoriesResponse[0].ParentId.Should().Be(category.Parent.Id.ToString());
             listCategoriesResponse[0].ParentName.Should().Be(category.Parent.Name);
         }
     }

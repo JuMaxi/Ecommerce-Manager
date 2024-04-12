@@ -28,10 +28,13 @@ namespace EcommerceManager.Services
 
         public async Task<List<Category>> GetAll()
         {
-            List<Category> categories = await _categoryDbAccess.GetAll();
-            return categories;
+            return await _categoryDbAccess.GetAll();
         }
 
+        public async Task<Category> GetById(int id)
+        {
+            return await _categoryDbAccess.GetById(id);
+        }
         public async Task Update(Category category)
         {
             await _validateCategory.Validate(category);
@@ -58,6 +61,7 @@ namespace EcommerceManager.Services
 
             await _categoryDbAccess.Update(toUpdate);
         }
+
 
         public async Task Delete(int id)
         {

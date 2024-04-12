@@ -36,6 +36,13 @@ namespace EcommerceManager.Controllers
             return listCategoriesResponse;
         }
 
+        [HttpGet("{id}")]
+        public async Task<CategoryResponse> GetById([FromRoute] int id)
+        {
+            return _categoryMapper.ConvertToResponse(await _categoryService.GetById(id));
+        }
+        
+
         [HttpPut("{id}")]
         public async Task Update([FromRoute] int id, [FromBody] CategoryRequest categoryRequest)
         {

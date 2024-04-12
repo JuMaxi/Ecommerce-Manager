@@ -7,6 +7,7 @@ namespace EcommerceManager.Interfaces
     {
         public Task Insert(Category category);
         public Task<List<Category>> GetAll();
+        public Task<Category> GetById(int id);
         public Task Update(Category category);
         public Task Delete(int id);
     }
