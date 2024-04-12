@@ -1,5 +1,6 @@
 ﻿using EcommerceManager.Interfaces;
 using EcommerceManager.Models.DataBase;
+using System.Collections.Generic;
 
 namespace EcommerceManager.Services
 {
@@ -21,9 +22,26 @@ namespace EcommerceManager.Services
             await _brandDbAccess.Insert(brand);
         }
 
-        public async Task<List<Brand>> GetAll()
+        public async Task<List<Brand>> GetAll(int limit, int page)
         {
-            return await _brandDbAccess.GetAll();
+            int skip = 0;
+
+            if(limit < 0 || limit > 1000)
+            {
+                limit = 10;
+            }
+
+            if(page < 0)
+            {
+                page = 1;
+            }
+
+            if (page > 1)
+            {
+                skip = limit * (page - 1);
+            }
+
+            return await _brandDbAccess.GetAll(skip, limit);
         }
 
         public async Task<Brand> GetById(int id)

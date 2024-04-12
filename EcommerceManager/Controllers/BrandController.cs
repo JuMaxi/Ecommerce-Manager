@@ -26,9 +26,9 @@ namespace EcommerceManager.Controllers
         }
 
         [HttpGet]
-        public async Task<List<BrandResponse>> GetAll()
+        public async Task<List<BrandResponse>> GetAll([FromQuery]int limit=20, [FromQuery]int page=1)
         {
-            return _brandMapper.ConvertToListResponse(await _brandService.GetAll());
+            return _brandMapper.ConvertToListResponse(await _brandService.GetAll(limit, page));
         }
 
         [HttpGet("{id}")]

@@ -35,9 +35,9 @@ namespace EcommerceManager.DbAccess
             return await _dbContext.Brands.Where(b => b.FoundationYear == year).FirstOrDefaultAsync();
         }
 
-        public async Task<List<Brand>> GetAll()
+        public async Task<List<Brand>> GetAll(int skip, int limit)
         {
-            return await _dbContext.Brands.ToListAsync();
+            return await _dbContext.Brands.Skip(skip).Take(limit).ToListAsync();
         }
 
         public async Task Update(Brand brand)
