@@ -6,7 +6,7 @@ namespace EcommerceManager.Interfaces
 {
     public interface ICategoryMapper
     {
-        public Category ConvertCategoryRequestToCategory(CategoryRequest categoryRequest);
-        public List<CategoryResponse> ConvertCategoryToCategoryResponse(List<Category> list);
+        public Category ConvertFromRequest(CategoryRequest categoryRequest);
+        public List<CategoryResponse> ConvertToListResponse(List<Category> list);
     }
 }

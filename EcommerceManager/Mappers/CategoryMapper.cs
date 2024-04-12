@@ -7,7 +7,7 @@ namespace EcommerceManager.Mappers
 {
     public class CategoryMapper : ICategoryMapper
     {
-        public Category ConvertCategoryRequestToCategory(CategoryRequest categoryRequest)
+        public Category ConvertFromRequest(CategoryRequest categoryRequest)
         {
             Category category = new Category()
             {
@@ -26,7 +26,7 @@ namespace EcommerceManager.Mappers
 
             return category;
         }
-        public List<CategoryResponse> ConvertCategoryToCategoryResponse(List<Category> list)
+        public List<CategoryResponse> ConvertToListResponse(List<Category> list)
         {
             List<CategoryResponse> listCategoriesResponse = new();
             foreach(Category c in list)

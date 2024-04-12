@@ -20,7 +20,7 @@ namespace EcommerceManager.Tests.MappersTests
             };
 
             CategoryMapper categoryMapper = new();
-            Category category = categoryMapper.ConvertCategoryRequestToCategory(categoryRequest);
+            Category category = categoryMapper.ConvertFromRequest(categoryRequest);
 
             category.Name.Should().Be(categoryRequest.Name);
             category.Description.Should().Be(categoryRequest.Description);
@@ -46,7 +46,7 @@ namespace EcommerceManager.Tests.MappersTests
             List<Category> categories = new() { { category } };
 
             CategoryMapper categoryMapper = new();
-            List<CategoryResponse> listCategoriesResponse = categoryMapper.ConvertCategoryToCategoryResponse(categories);
+            List<CategoryResponse> listCategoriesResponse = categoryMapper.ConvertToListResponse(categories);
 
             listCategoriesResponse[0].Name.Should().Be(category.Name);
             listCategoriesResponse[0].Description.Should().Be(category.Description);
@@ -65,7 +65,7 @@ namespace EcommerceManager.Tests.MappersTests
 
             CategoryMapper categoryMapper = new();
 
-            Category category = categoryMapper.ConvertCategoryRequestToCategory(categoryRequest);
+            Category category = categoryMapper.ConvertFromRequest(categoryRequest);
 
             category.Parent.Should().BeNull();
         }
@@ -82,7 +82,7 @@ namespace EcommerceManager.Tests.MappersTests
             
             CategoryMapper mapper = new();
 
-            List<CategoryResponse> listCategoriesResponse = mapper.ConvertCategoryToCategoryResponse(listCategories);
+            List<CategoryResponse> listCategoriesResponse = mapper.ConvertToListResponse(listCategories);
 
             listCategoriesResponse[0].ParentId.Should().Be(category.Parent.Id);
             listCategoriesResponse[0].ParentName.Should().Be(category.Parent.Name);

@@ -31,10 +31,10 @@ namespace EcommerceManager.Tests.Services
                 Parent = null
             };
 
-            await service.InsertNewCategory(toInclude);
+            await service.Insert(toInclude);
 
             // Assert
-            await dbAccessFake.Received(1).AddNewCategory(toInclude);
+            await dbAccessFake.Received(1).Insert(toInclude);
         }
 
         [Fact]
@@ -49,11 +49,11 @@ namespace EcommerceManager.Tests.Services
 
             Category parent = new Category();
 
-            dbAccessFake.GetCategoryFromDbById(toInclude.Parent.Id).Returns(parent);
+            dbAccessFake.GetById(toInclude.Parent.Id).Returns(parent);
 
-            await service.InsertNewCategory(toInclude);
+            await service.Insert(toInclude);
 
-            await dbAccessFake.Received(1).AddNewCategory(toInclude);
+            await dbAccessFake.Received(1).Insert(toInclude);
 
             Assert.Equal(toInclude.Parent, parent);
         }
@@ -81,11 +81,11 @@ namespace EcommerceManager.Tests.Services
                 Parent = null
             };
 
-            dbAccessFake.GetCategoryFromDbById(toUpdate.Id).Returns(updated);
+            dbAccessFake.GetById(toUpdate.Id).Returns(updated);
 
-            await service.UpdateCategory(toUpdate);
+            await service.Update(toUpdate);
 
-            await dbAccessFake.Received(1).UpdateCategory(updated);
+            await dbAccessFake.Received(1).Update(updated);
 
             Assert.Equal(toUpdate.Name, updated.Name);
             Assert.Equal(toUpdate.Description, updated.Description);
@@ -116,12 +116,12 @@ namespace EcommerceManager.Tests.Services
                 Id = 10,
             };
 
-            dbAccessFake.GetCategoryFromDbById(updated.Id).Returns(toUpdate);
-            dbAccessFake.GetCategoryFromDbById(updated.Parent.Id).Returns(parent);
+            dbAccessFake.GetById(updated.Id).Returns(toUpdate);
+            dbAccessFake.GetById(updated.Parent.Id).Returns(parent);
 
-            await service.UpdateCategory(updated);
+            await service.Update(updated);
 
-            await dbAccessFake.Received(1).UpdateCategory(toUpdate);
+            await dbAccessFake.Received(1).Update(toUpdate);
 
             Assert.Equal(toUpdate.Parent, parent);
         }
@@ -141,9 +141,9 @@ namespace EcommerceManager.Tests.Services
                 Parent = new() { Id = 3 }
             };
 
-            dbAccessFake.GetCategoryFromDbById(updated.Id).Returns(toUpdate);
+            dbAccessFake.GetById(updated.Id).Returns(toUpdate);
 
-            await service.UpdateCategory(updated);
+            await service.Update(updated);
 
             Assert.Null(toUpdate.Parent);
         }
@@ -157,11 +157,11 @@ namespace EcommerceManager.Tests.Services
                 Parent = null
             };
 
-            dbAccessFake.GetCategoryFromDbByParentId(delete.Id).ReturnsNull();
+            dbAccessFake.GetByParentId(delete.Id).ReturnsNull();
 
-            await service.DeleteCategory(delete.Id);
+            await service.Delete(delete.Id);
 
-            await dbAccessFake.Received(1).DeleteCategory(delete.Id);
+            await dbAccessFake.Received(1).Delete(delete.Id);
         }
 
         [Fact]
@@ -179,9 +179,9 @@ namespace EcommerceManager.Tests.Services
                 Parent = new() { Id = 1 }
             };
 
-            dbAccessFake.GetCategoryFromDbByParentId(delete.Id).Returns(childrenCategory);
+            dbAccessFake.GetByParentId(delete.Id).Returns(childrenCategory);
 
-            await service.Invoking(svc => svc.DeleteCategory(delete.Id))
+            await service.Invoking(svc => svc.Delete(delete.Id))
                 .Should()
                 .ThrowAsync<Exception>()
                 .WithMessage("There are children categories for Id " + delete.Id + ". Please, verify the children categories before delete.");

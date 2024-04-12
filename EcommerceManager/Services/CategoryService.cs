@@ -14,29 +14,29 @@ namespace EcommerceManager.Services
             _validateCategory = validateCategory;
         }
 
-        public async Task InsertNewCategory(Category category)
+        public async Task Insert(Category category)
         {
             await _validateCategory.Validate(category);
 
             if (category.Parent != null)
             {
-                category.Parent = await _categoryDbAccess.GetCategoryFromDbById(category.Parent.Id);
+                category.Parent = await _categoryDbAccess.GetById(category.Parent.Id);
             }
 
-            await _categoryDbAccess.AddNewCategory(category);
+            await _categoryDbAccess.Insert(category);
         }
 
-        public async Task<List<Category>> GetAllCategoriesFromDb()
+        public async Task<List<Category>> GetAll()
         {
-            List<Category> categories = await _categoryDbAccess.GetListCategoriesFromDb();
+            List<Category> categories = await _categoryDbAccess.GetAll();
             return categories;
         }
 
-        public async Task UpdateCategory(Category category)
+        public async Task Update(Category category)
         {
             await _validateCategory.Validate(category);
 
-            Category toUpdate = await _categoryDbAccess.GetCategoryFromDbById(category.Id);
+            Category toUpdate = await _categoryDbAccess.GetById(category.Id);
 
             toUpdate.Name = category.Name;
             toUpdate.Description = category.Description;
@@ -45,7 +45,7 @@ namespace EcommerceManager.Services
             if (category.Parent != null)
             {
                 Category parent = new();
-                parent = await _categoryDbAccess.GetCategoryFromDbById(category.Parent.Id);
+                parent = await _categoryDbAccess.GetById(category.Parent.Id);
                 toUpdate.Parent = parent;
             }
             else
@@ -56,17 +56,17 @@ namespace EcommerceManager.Services
                 }
             }
 
-            await _categoryDbAccess.UpdateCategory(toUpdate);
+            await _categoryDbAccess.Update(toUpdate);
         }
 
-        public async Task DeleteCategory(int id)
+        public async Task Delete(int id)
         {
-            if (await _categoryDbAccess.GetCategoryFromDbByParentId(id) != null)
+            if (await _categoryDbAccess.GetByParentId(id) != null)
             {
                 throw new Exception("There are children categories for Id " + id + ". Please, verify the children categories before delete.");
             }
 
-            await _categoryDbAccess.DeleteCategory(id);
+            await _categoryDbAccess.Delete(id);
         }
     }
 }

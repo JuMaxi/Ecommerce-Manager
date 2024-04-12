@@ -41,7 +41,7 @@ namespace EcommerceManager.Tests.Validators
             Category category2 = new() { Name = "Trousers" };
 
             var dbAccessCategoryFake = Substitute.For<ICategoryDbAccess>();
-            dbAccessCategoryFake.GetCategoryFromDbByName(category2.Name).Returns(Task.FromResult(category2));
+            dbAccessCategoryFake.GetByName(category2.Name).Returns(Task.FromResult(category2));
 
             ValidateCategory validatorCategory = new(dbAccessCategoryFake);
 
@@ -65,7 +65,7 @@ namespace EcommerceManager.Tests.Validators
             };
 
             var dbAccessCategoryFake = Substitute.For<ICategoryDbAccess>();
-            dbAccessCategoryFake.GetCategoryFromDbByName(category2.Name).Returns(Task.FromResult(category2));   
+            dbAccessCategoryFake.GetByName(category2.Name).Returns(Task.FromResult(category2));   
 
             ValidateCategory validatorCategory = new(dbAccessCategoryFake);
 
@@ -89,7 +89,7 @@ namespace EcommerceManager.Tests.Validators
             };
 
             var dbAccessCategoryFake = Substitute.For<ICategoryDbAccess>();
-            dbAccessCategoryFake.GetCategoryFromDbByName(category2.Name).Returns(Task.FromResult(category2));
+            dbAccessCategoryFake.GetByName(category2.Name).Returns(Task.FromResult(category2));
 
             ValidateCategory validatorCategory = new(dbAccessCategoryFake);
 
@@ -114,7 +114,7 @@ namespace EcommerceManager.Tests.Validators
             };
 
             var dbAccessCategoryFake = Substitute.For<ICategoryDbAccess>();
-            dbAccessCategoryFake.GetCategoryFromDbByDescription(category2.Description).Returns(category2);
+            dbAccessCategoryFake.GetByDescription(category2.Description).Returns(category2);
 
             ValidateCategory validatorCategory = new(dbAccessCategoryFake);
 
@@ -141,7 +141,7 @@ namespace EcommerceManager.Tests.Validators
             };
 
             var dbAccessCategoryFake = Substitute.For<ICategoryDbAccess>();
-            dbAccessCategoryFake.GetCategoryFromDbById(category2.Id).Returns(Task.FromResult(category2));
+            dbAccessCategoryFake.GetById(category2.Id).Returns(Task.FromResult(category2));
 
             ValidateCategory validatorCategory = new(dbAccessCategoryFake);
 
@@ -168,7 +168,7 @@ namespace EcommerceManager.Tests.Validators
             };
 
             var dbAccessCategoryFake = Substitute.For<ICategoryDbAccess>();
-            dbAccessCategoryFake.GetCategoryFromDbById(category2.Id).Returns(Task.FromResult(category2));
+            dbAccessCategoryFake.GetById(category2.Id).Returns(Task.FromResult(category2));
 
             ValidateCategory validatorCategory = new(dbAccessCategoryFake);
 
@@ -190,7 +190,7 @@ namespace EcommerceManager.Tests.Validators
             };
 
             var dbAccessFake = Substitute.For<ICategoryDbAccess>();
-            dbAccessFake.GetCategoryFromDbById(category.Parent.Id).ReturnsNull();
+            dbAccessFake.GetById(category.Parent.Id).ReturnsNull();
 
             ValidateCategory validatorCategory = new(dbAccessFake);
 

@@ -20,35 +20,35 @@ namespace EcommerceManager.Controllers
         }
 
         [HttpPost]
-        public async Task AddNewCategory(CategoryRequest categoryRequest)
+        public async Task Insert(CategoryRequest categoryRequest)
         {
-            Category category = _categoryMapper.ConvertCategoryRequestToCategory(categoryRequest);
-            await _categoryService.InsertNewCategory(category);
+            Category category = _categoryMapper.ConvertFromRequest(categoryRequest);
+            await _categoryService.Insert(category);
         }
 
         [HttpGet]
-        public async Task<List<CategoryResponse>> GetCategoriesFromDb()
+        public async Task<List<CategoryResponse>> GetAll()
         {
-            List<Category> categories = await _categoryService.GetAllCategoriesFromDb();
+            List<Category> categories = await _categoryService.GetAll();
 
-            List<CategoryResponse> listCategoriesResponse = _categoryMapper.ConvertCategoryToCategoryResponse(categories);
+            List<CategoryResponse> listCategoriesResponse = _categoryMapper.ConvertToListResponse(categories);
 
             return listCategoriesResponse;
         }
 
         [HttpPut("{id}")]
-        public async Task UpdateCategory([FromRoute] int id, [FromBody] CategoryRequest categoryRequest)
+        public async Task Update([FromRoute] int id, [FromBody] CategoryRequest categoryRequest)
         {
-            Category category = _categoryMapper.ConvertCategoryRequestToCategory(categoryRequest);
+            Category category = _categoryMapper.ConvertFromRequest(categoryRequest);
             category.Id = id;
 
-            await _categoryService.UpdateCategory(category);
+            await _categoryService.Update(category);
         }
 
         [HttpDelete("{id}")]
-        public async Task DeleteCategory([FromRoute] int id)
+        public async Task Delete([FromRoute] int id)
         {
-           await _categoryService.DeleteCategory(id);
+           await _categoryService.Delete(id);
         }
     }
 }

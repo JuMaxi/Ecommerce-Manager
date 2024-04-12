@@ -14,46 +14,46 @@ namespace EcommerceManager.DbAccess
             _dbContext = dbContext;
         }
 
-        public async Task AddNewCategory(Category category)
+        public async Task Insert(Category category)
         {
             await _dbContext.Categories.AddAsync(category);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Category> GetCategoryFromDbById(int id)
+        public async Task<Category> GetById(int id)
         {
             return await _dbContext.Categories.Where(c => c.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
-        public async Task<Category> GetCategoryFromDbByName(string name)
+        public async Task<Category> GetByName(string name)
         {
             return await _dbContext.Categories.Where(c => c.Name.Equals(name)).FirstOrDefaultAsync();
         }
 
-        public async Task<Category> GetCategoryFromDbByDescription(string description)
+        public async Task<Category> GetByDescription(string description)
         {
             return await _dbContext.Categories.Where(c => c.Description.Equals(description)).FirstOrDefaultAsync();
         }
 
-        public async Task<Category> GetCategoryFromDbByParentId(int ParentId)
+        public async Task<Category> GetByParentId(int ParentId)
         {
             return await _dbContext.Categories.Where(p => p.Parent.Id.Equals(ParentId)).FirstOrDefaultAsync();
         }
-        public async Task<List<Category>> GetListCategoriesFromDb()
+        public async Task<List<Category>> GetAll()
         {
             var allCategories = await _dbContext.Categories.Include(c => c.Parent).ToListAsync();
             return allCategories;
         }
 
-        public async Task UpdateCategory(Category category)
+        public async Task Update(Category category)
         {
             _dbContext.Categories.Update(category);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteCategory(int id)
+        public async Task Delete(int id)
         {
-            Category category = await GetCategoryFromDbById(id);
+            Category category = await GetById(id);
             _dbContext.Categories.Remove(category);
             await _dbContext.SaveChangesAsync();
         }
