@@ -22,7 +22,7 @@ namespace EcommerceManager.Tests.Services
         }
 
         [Fact]
-        public async Task WhenInsertingNewCategory_ShouldSaveOnDatabase()
+        public async Task When_Insert_Category_Should_Save_On_Data_Base()
         {
             Category toInclude = new Category()
             {
@@ -38,7 +38,7 @@ namespace EcommerceManager.Tests.Services
         }
 
         [Fact]
-        public async Task WhenInsertingNewCatetoryWithParent_ShouldGetParentFromDataBase()
+        public async Task When_Insert_Catetory_With_Parent_Should_Get_Parent_From_Data_Base()
         {
             Category toInclude = new Category()
             {
@@ -59,7 +59,7 @@ namespace EcommerceManager.Tests.Services
         }
 
         [Fact]
-        public async Task WhenUpdatingCategory_ShouldBeEqualCategoryReceived()
+        public async Task When_Update_Category_Should_Be_Equal_Category_Received()
         {
             // This is the one we receive, we pass in the method's parameter
             Category toUpdate = new Category()
@@ -93,7 +93,7 @@ namespace EcommerceManager.Tests.Services
         }
 
         [Fact]
-        public async Task WhenUpdatingCategoryParent_ShouldReturnCategoryParentFromDataBase()
+        public async Task When_Update_Category_Parent_Should_Return_Category_Parent_From_Data_Base()
         {
             // This is the one we receive, we pass in the method's parameter
             Category updated = new Category()
@@ -127,7 +127,7 @@ namespace EcommerceManager.Tests.Services
         }
 
         [Fact]
-        public async Task WhenUpdatingCategoryIfParentIsNull_ShouldUpdateParentToNull()
+        public async Task When_Update_Category_If_Parent_Is_Null_Should_Update_Parent_To_Null()
         {
             Category updated = new Category()
             {
@@ -149,7 +149,7 @@ namespace EcommerceManager.Tests.Services
         }
 
         [Fact]
-        public async Task WhenDeletingCategoryIfThereAreNoChildrenCategories_ShouldNotThrowException()
+        public async Task When_Delete_Category_If_There_Are_No_Children_Categories_Should_Not_Throw_Exception()
         {
             Category delete = new Category()
             {
@@ -165,7 +165,7 @@ namespace EcommerceManager.Tests.Services
         }
 
         [Fact]
-        public async Task WhenDeletingCategoryIfThereAreChildrenCategories_ShouldThrowException()
+        public async Task When_Delete_Category_If_There_Are_Children_Categories_Should_Throw_Exception()
         {
             Category delete = new Category()
             {

@@ -1,5 +1,4 @@
-﻿using EcommerceManager.DbAccess;
-using EcommerceManager.Interfaces;
+﻿using EcommerceManager.Interfaces;
 using EcommerceManager.Models.DataBase;
 using EcommerceManager.Services;
 using NSubstitute;
