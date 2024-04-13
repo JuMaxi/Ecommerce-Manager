@@ -51,5 +51,10 @@ namespace EcommerceManager.DbAccess
             _dbContext.Brands.Remove(await GetById(id));
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<int> GetCount()
+        {
+            return await _dbContext.Brands.CountAsync();
+        }
     }
 }

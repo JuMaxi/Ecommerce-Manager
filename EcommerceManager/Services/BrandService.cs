@@ -64,5 +64,10 @@ namespace EcommerceManager.Services
         {
             await _brandDbAccess.Delete(id);
         }
+
+        public async Task<int> GetCount()
+        {
+            return await _brandDbAccess.GetCount();
+        }
     }
 }

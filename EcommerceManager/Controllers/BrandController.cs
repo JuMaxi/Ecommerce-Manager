@@ -26,9 +26,12 @@ namespace EcommerceManager.Controllers
         }
 
         [HttpGet]
-        public async Task<List<BrandResponse>> GetAll([FromQuery]int limit=20, [FromQuery]int page=1)
+        public async Task<BrandPaginationResponse> GetAll([FromQuery]int limit=20, [FromQuery]int page=1)
         {
-            return _brandMapper.ConvertToListResponse(await _brandService.GetAll(limit, page));
+            List<BrandResponse> list = _brandMapper.ConvertToListResponse(await _brandService.GetAll(limit, page));
+            int count = await _brandService.GetCount();
+
+            return new BrandPaginationResponse { Count = count, Items = list };
         }
 
         [HttpGet("{id}")]

@@ -11,5 +11,6 @@ namespace EcommerceManager.Interfaces
         public Task<List<Brand>> GetAll(int skip, int limit);
         public Task Update(Brand brand);
         public Task Delete(int id);
+        public Task<int> GetCount();
     }
 }
