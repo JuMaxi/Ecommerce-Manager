@@ -1,4 +1,4 @@
-﻿using EcommerceManager.Interfaces;
+﻿using EcommerceManager.API.Mappers;
 using EcommerceManager.Models.DataBase;
 using EcommerceManager.Models.Requests;
 using EcommerceManager.Models.Responses;

@@ -1,5 +1,4 @@
 ﻿using EcommerceManager.Models.DataBase;
-using EcommerceManager.Models.Requests;
 
 namespace EcommerceManager.Interfaces
 {

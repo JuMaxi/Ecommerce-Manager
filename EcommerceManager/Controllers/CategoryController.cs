@@ -1,4 +1,5 @@
-﻿using EcommerceManager.Interfaces;
+﻿using EcommerceManager.API.Mappers;
+using EcommerceManager.Interfaces;
 using EcommerceManager.Models.DataBase;
 using EcommerceManager.Models.Requests;
 using EcommerceManager.Models.Responses;
@@ -41,7 +42,6 @@ namespace EcommerceManager.Controllers
             return _categoryMapper.ConvertToResponse(await _categoryService.GetById(id));
         }
         
-
         [HttpPut("{id}")]
         public async Task Update([FromRoute] int id, [FromBody] CategoryRequest categoryRequest)
         {

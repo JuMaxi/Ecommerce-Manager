@@ -2,7 +2,7 @@
 using EcommerceManager.Models.Requests;
 using EcommerceManager.Models.Responses;
 
-namespace EcommerceManager.Interfaces
+namespace EcommerceManager.API.Mappers
 {
     public interface IBrandMapper
     {
