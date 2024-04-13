@@ -27,13 +27,12 @@ namespace EcommerceManager.Controllers
         }
 
         [HttpGet]
-        public async Task<List<CategoryResponse>> GetAll()
+        public async Task<CategoryPaginationResponse> GetAll([FromQuery] int limit=20, [FromQuery] int page=1)
         {
-            List<Category> categories = await _categoryService.GetAll();
-
-            List<CategoryResponse> listCategoriesResponse = _categoryMapper.ConvertToListResponse(categories);
-
-            return listCategoriesResponse;
+            List<CategoryResponse> categoryResponse = _categoryMapper.ConvertToListResponse(await _categoryService.GetAll(limit, page));
+            int count = await _categoryService.GetCount();
+            
+            return new CategoryPaginationResponse() { Count = count, Items = categoryResponse };
         }
 
         [HttpGet("{id}")]

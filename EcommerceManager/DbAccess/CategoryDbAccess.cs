@@ -39,10 +39,12 @@ namespace EcommerceManager.DbAccess
         {
             return await _dbContext.Categories.Where(p => p.Parent.Id.Equals(ParentId)).FirstOrDefaultAsync();
         }
-        public async Task<List<Category>> GetAll()
+        public async Task<List<Category>> GetAll(int skip, int limit)
         {
-            var allCategories = await _dbContext.Categories.Include(c => c.Parent).ToListAsync();
-            return allCategories;
+            return await _dbContext.Categories.Skip(skip)
+                .Take(limit)
+                .Include(c => c.Parent)
+                .ToListAsync();
         }
 
         public async Task Update(Category category)
@@ -58,5 +60,9 @@ namespace EcommerceManager.DbAccess
             await _dbContext.SaveChangesAsync();
         }
         
+        public async Task<int> GetCount()
+        {
+            return await _dbContext.Categories.CountAsync();
+        }
     }
 }

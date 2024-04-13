@@ -26,9 +26,25 @@ namespace EcommerceManager.Services
             await _categoryDbAccess.Insert(category);
         }
 
-        public async Task<List<Category>> GetAll()
+        public async Task<List<Category>> GetAll(int limit, int page)
         {
-            return await _categoryDbAccess.GetAll();
+            int skip = 0;
+
+            if (limit < 0 || limit > 1000)
+            {
+                limit = 10;
+            }
+
+            if (page < 0)
+            {
+                page = 1;
+            }
+
+            if (page > 1)
+            {
+                skip = limit * (page - 1);
+            }
+            return await _categoryDbAccess.GetAll(skip, limit);
         }
 
         public async Task<Category> GetById(int id)
@@ -62,7 +78,6 @@ namespace EcommerceManager.Services
             await _categoryDbAccess.Update(toUpdate);
         }
 
-
         public async Task Delete(int id)
         {
             if (await _categoryDbAccess.GetByParentId(id) != null)
@@ -71,6 +86,11 @@ namespace EcommerceManager.Services
             }
 
             await _categoryDbAccess.Delete(id);
+        }
+
+        public async Task<int> GetCount()
+        {
+            return await _categoryDbAccess.GetCount();
         }
     }
 }
