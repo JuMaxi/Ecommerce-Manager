@@ -3,11 +3,6 @@ using EcommerceManager.Models.DataBase;
 using EcommerceManager.Models.Requests;
 using EcommerceManager.Models.Responses;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EcommerceManager.Tests.MappersTests
 {

@@ -1,4 +1,5 @@
-﻿using EcommerceManager.Models.DataBase;
+﻿using EcommerceManager.Domain.Models;
+using EcommerceManager.Models.DataBase;
 using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceManager.Db
@@ -9,5 +10,6 @@ namespace EcommerceManager.Db
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

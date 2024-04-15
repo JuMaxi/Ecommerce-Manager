@@ -24,6 +24,7 @@ builder.Services.AddTransient<IBrandService, BrandService>();
 builder.Services.AddTransient<IBrandDbAccess, BrandDbAccess>();
 builder.Services.AddTransient<IBrandMapper, BrandMapper>();
 builder.Services.AddTransient<IValidateBrand, ValidateBrand>();
+builder.Services.AddTransient<IProductMapper, ProductMapper>();
 
 string connectionString = builder.Configuration.GetValue<string>("ConnectionStringDBContext");
 builder.Services.AddDbContext<EcommerceManagerDbContext>(DB => DB.UseSqlServer(connectionString));
