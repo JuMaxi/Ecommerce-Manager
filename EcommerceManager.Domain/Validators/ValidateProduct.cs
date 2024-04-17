@@ -31,6 +31,10 @@ namespace EcommerceManager.Domain.Validators
             {
                 throw new Exception("The field name can't be null or empty. Please fill this field do continue.");
             }
+            if(name.Length > 100)
+            {
+                throw new Exception("The maximum characters for Name is 100. Please change it to continue.");
+            }
         }
         private void ValidateDescription(string description)
         {
@@ -69,9 +73,9 @@ namespace EcommerceManager.Domain.Validators
             {
                 throw new Exception("The field image can't be null or empty. Please fill this field to continue.");
             }
-            if(image.Length > 399)
+            if(image.Length > 400)
             {
-                throw new Exception("The field image can have until 400 characters. Please fill this field with the correct information");
+                throw new Exception("The maximum characters for Image is 400. Please change it to continue.");
             }
         }
 
@@ -80,6 +84,10 @@ namespace EcommerceManager.Domain.Validators
             if(colour == null || colour.Length == 0)
             {
                 throw new Exception("The field colour can't be null or empty. Please fill this field to continue");
+            }
+            if(colour.Length > 20)
+            {
+                throw new Exception("The maximum characters for Colour is 20. Please change it to continue.");
             }
         }
 
@@ -104,6 +112,10 @@ namespace EcommerceManager.Domain.Validators
             if(SKU ==  null || SKU.Length == 0)
             {
                 throw new Exception("The field SKU can't be null or empty. Please fill this field to continue.");
+            }
+            if(SKU.Length > 20)
+            {
+                throw new Exception("The maximum characters for SKU is 20. Please change it to continue.");
             }
         }
 
