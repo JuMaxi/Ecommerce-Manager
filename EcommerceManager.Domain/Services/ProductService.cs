@@ -23,6 +23,11 @@ namespace EcommerceManager.Domain.Services
         public async Task Insert(Product product)
         {
             await _validateProduct.Validate(product);
+
+            product.Category = await _categoryDbAccess.GetById(product.Category.Id);
+
+            product.Brand = await _brandDbAccess.GetById(product.Brand.Id);
+
             await _productDbAccess.Insert(product);
         }
 
@@ -35,7 +40,7 @@ namespace EcommerceManager.Domain.Services
                 limit = 10;
             }
 
-            if(page < 0)
+            if(page <= 0)
             {
                 page = 1;
             }
