@@ -167,5 +167,112 @@ namespace EcommerceManager.Tests.Services
             await _productDbAccess.Received(1).GetAll(skip, limit);
         }
 
+        [Fact]
+        public async Task When_Update_Received_Product_Should_Be_Equal_Updated_Product()
+        {
+            Product product = new()
+            {
+                Id = 1,
+                Name = "Trousers",
+                Description = "Women Trousers",
+                Category = new() { Id = 1 },
+                Price = 10,
+                Image = "ImageTest",
+                Colour = "Green",
+                Brand = new() { Id = 10 },
+                SKU = "14253678",
+                Dimensions = new() { Width = 5, Height = 3, Length = 1 }
+            };
+
+            Product toUpdate = new()
+            {
+                Id = 1,
+                Name = "Dress",
+                Description = "Women Dress",
+                Category = new() { Id = 3 },
+                Price = 15,
+                Image = "ImageTest",
+                Colour = "Purple",
+                Brand = new() { Id = 5 },
+                SKU = "1005242",
+                Dimensions = new() { Width = 3, Height = 9, Length = 8 }
+            };
+
+            _productDbAccess.GetById(product.Id).Returns(toUpdate);
+
+            _categoryDbAccess.GetById(product.Category.Id).Returns(product.Category);
+
+            _brandDbAccess.GetById(product.Brand.Id).Returns(product.Brand);
+
+            await _productService.Update(product);
+
+            await _productDbAccess.Received(1).Update(toUpdate);
+
+            Assert.Equal(toUpdate.Id, product.Id);
+            Assert.Equal(toUpdate.Name, product.Name);
+            Assert.Equal(toUpdate.Description, product.Description);
+            Assert.Equal(toUpdate.Category.Id, product.Category.Id);
+            Assert.Equal(toUpdate.Price, product.Price);
+            Assert.Equal(toUpdate.Image, product.Image);
+            Assert.Equal(toUpdate.Colour, product.Colour);
+            Assert.Equal(toUpdate.Brand.Id, product.Brand.Id);
+            Assert.Equal(toUpdate.SKU, product.SKU);
+            Assert.Equal(toUpdate.Dimensions.Width, product.Dimensions.Width);
+            Assert.Equal(toUpdate.Dimensions.Height, product.Dimensions.Height);
+            Assert.Equal(toUpdate.Dimensions.Length, product.Dimensions.Length);
+        }
+
+        [Fact]
+        public async Task When_Update_Product_Should_Product_Db_Access_Receive_One_Call()
+        {
+            Product product = new()
+            {
+                Id = 1,
+                Name = "Trousers",
+                Description = "Women Trousers",
+                Category = new() { Id = 1 },
+                Price = 10,
+                Image = "ImageTest",
+                Colour = "Green",
+                Brand = new() { Id = 10 },
+                SKU = "14253678",
+                Dimensions = new() { Width = 5, Height = 3, Length = 1 }
+            };
+
+            Product toUpdate = new()
+            {
+                Id = 1,
+                Name = "Dress",
+                Description = "Women Dress",
+                Category = new() { Id = 3 },
+                Price = 15,
+                Image = "ImageTest",
+                Colour = "Purple",
+                Brand = new() { Id = 5 },
+                SKU = "1005242",
+                Dimensions = new() { Width = 3, Height = 9, Length = 8 }
+            };
+
+            _productDbAccess.GetById(product.Id).Returns(toUpdate);
+
+            _categoryDbAccess.GetById(product.Category.Id).Returns(product.Category);
+
+            _brandDbAccess.GetById(product.Brand.Id).Returns(product.Brand);
+
+            await _productService.Update(product);
+
+            await _productDbAccess.Received(1).Update(toUpdate);
+        }
+
+        [Fact]
+        public async Task When_Delete_Product_Should_Product_Db_Access_Receive_One_Call()
+        {
+            Product product = new() { Id = 1, };
+
+            await _productService.Delete(product.Id);
+
+            await _productDbAccess.Received(1).Delete(product.Id);
+        }
+
     }
 }
