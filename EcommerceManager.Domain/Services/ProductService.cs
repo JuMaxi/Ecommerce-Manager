@@ -31,6 +31,11 @@ namespace EcommerceManager.Domain.Services
             await _productDbAccess.Insert(product);
         }
 
+        public async Task<Product> GetById(int id)
+        {
+            return await _productDbAccess.GetById(id);
+        }
+
         public async Task<List<Product>> GetAll(int limit, int page)
         {
             int skip = 0;

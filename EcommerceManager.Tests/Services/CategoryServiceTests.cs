@@ -186,5 +186,23 @@ namespace EcommerceManager.Tests.Services
                 .ThrowAsync<Exception>()
                 .WithMessage("There are children categories for Id " + delete.Id + ". Please, verify the children categories before delete.");
         }
+
+        [Fact]
+        public async Task When_Delete_Category_Should_Category_Db_Access_Receive_One_Call()
+        {
+            Category category = new Category() { Id = 1, };
+
+            await service.Delete(category.Id);
+
+            await dbAccessFake.Received(1).Delete(category.Id);
+        }
+
+        [Fact]
+        public async Task When_GetCount_Category_Should_Category_Db_Access_Receive_One_Call()
+        {
+            await service.GetCount();
+
+            await dbAccessFake.Received(1).GetCount();
+        }
     }
 }

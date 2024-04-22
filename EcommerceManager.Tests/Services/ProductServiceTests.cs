@@ -90,6 +90,16 @@ namespace EcommerceManager.Tests.Services
         }
 
         [Fact]
+        public async Task When_Get_By_Id_Should_Product_Db_Access_Receive_One_Call()
+        {
+            int id = 1;
+            
+            await _productService.GetById(id);
+
+            await _productDbAccess.Received(1).GetById(id);
+        }
+
+        [Fact]
         public async Task When_Get_All_If_Limit_Is_Less_Than_Zero_Limit_Should_Be_10()
         {
             int limit = -5;
@@ -272,6 +282,14 @@ namespace EcommerceManager.Tests.Services
             await _productService.Delete(product.Id);
 
             await _productDbAccess.Received(1).Delete(product.Id);
+        }
+
+        [Fact]
+        public async Task When_Get_Count_Product_Should_Product_Db_Access_Receive_One_Call()
+        {
+            await _productService.GetCount();
+
+            await _productDbAccess.Received(1).GetCount();
         }
 
     }
